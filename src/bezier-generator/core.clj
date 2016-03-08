@@ -21,7 +21,6 @@
           (rand-nth (range 1 2))
           (rand-nth (map #(/ % 2) (range 1 2))))))
 
-(random-scalar)
 (defmacro rand-op
   []
   '(rand-nth ['+ '*]))
@@ -30,38 +29,42 @@
   []
   '(list '* (random-scalar) (list (rand-nth ['Math/sin 'Math/cos]) (list '* (random-scalar) 'x))))
 
-(rand-wave)
-;switch apply to cons for better results
 (defmacro function-generator
   []
   '(list 'fn '[x] (cons (rand-op) (repeatedly (rand-nth (range 1 6)) #(rand-wave)))))
 
-(function-generator)
-(eval 5)
-(let [functions (map eval (repeatedly 2 #(function-generator)))]
-  (map #(%1 %2) functions [1 2]))
-(map eval (repeatedly 2 #(function-generator)))
-(repeatedly 1 #(function-generator))
-(def spec
-  {:x-axis (viz/linear-axis
-            {:domain [-1.8 1.8]
-             :range  [50 590]
-             :pos    -1})
-   :y-axis (viz/linear-axis
-            {:domain      [-1.8 1.8]
-             :range       [550 20]
-             :pos         -1})
-   :grid   {:attribs {:stroke "#caa"}
-            :minor-x false
-            :minor-y false}
-   :data   [{:values  (map (juxt (eval (function-generator)) (eval (function-generator))) 
-                           (range 0 300 0.01))
-             :attribs {:fill "#0af" :stroke "none"}
-             :layout  viz/svg-scatter-plot}
-            ]})
-(fn [x] (* (* 1 (Math/cos (* 1/2 x))) (* 1 (Math/sin (* 1 x))) (* 1 (Math/cos (* 1 x)))))
-(eval) (function-generator)
-(export-viz spec "bezier.svg")
+(defn spec ;still need to find way to append function to graph as comment.
+  []
+  (let [x-function (function-generator)
+        y-function (function-generator)
+        x-string (str x-function)
+        y-string (str y-function)
+        x-eval (eval x-function)
+        y-eval (eval y-function)
+        data-values (map (juxt x-eval y-eval) 
+                         (range 0 300 0.01))
+        xs (sort (map first data-values))
+        ys (sort (map second data-values))
+        x-domain [(first xs) (last xs)]
+        y-domain [(first ys) (last ys)]]
+    {:x-axis (viz/linear-axis
+                             {:domain x-domain
+                              :range  [50 590]
+                              :pos    -1})
+           :y-axis (viz/linear-axis
+                    {:domain      y-domain 
+                     :range       [550 20]
+                     :pos         -1})
+           :grid   {:attribs {:stroke "#caa"}
+                    :minor-x false
+                    :minor-y false}
+           :data   [{:values data-values 
+                     :attribs {:fill "#0af" :stroke "none"}
+                     :layout  viz/svg-scatter-plot}
+                    ]}))
+
+(export-viz (spec) "bezier.svg")
+
 (-> spec
     (assoc :y-axis (viz/log-axis
                     {:domain      [0.1 101]

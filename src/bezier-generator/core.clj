@@ -1,4 +1,4 @@
-(ns bezier-generator.core
+(ns golo.core
   (:require [thi.ng.geom.viz.core :as viz]
             [thi.ng.geom.svg.core :as svg]
             [thi.ng.geom.core.vector :as v]

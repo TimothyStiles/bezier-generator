@@ -48,20 +48,19 @@
         x-domain [(first xs) (last xs)]
         y-domain [(first ys) (last ys)]]
     {:x-axis (viz/linear-axis
-                             {:domain x-domain
-                              :range  [50 590]
-                              :pos    -1})
-           :y-axis (viz/linear-axis
-                    {:domain      y-domain 
-                     :range       [550 20]
-                     :pos         -1})
-           :grid   {:attribs {:stroke "#caa"}
-                    :minor-x false
-                    :minor-y false}
-           :data   [{:values data-values 
-                     :attribs {:fill "#0af" :stroke "none"}
-                     :layout  viz/svg-scatter-plot}
-                    ]}))
+               {:domain x-domain
+                :range  [50 590]
+                :pos    -1})
+      :y-axis (viz/linear-axis
+                {:domain      y-domain 
+                 :range       [550 20]
+                 pos         -1})
+      :grid   {:attribs {:stroke "#caa"}
+                :minor-x false
+                :minor-y false}
+      :data   [{:values data-values
+                :attribs {:fill "#0af" :stroke "none"}
+                :layout  viz/svg-scatter-plot}]}))
 
 (export-viz (spec) "bezier.svg")
 

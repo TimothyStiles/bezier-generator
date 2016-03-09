@@ -63,12 +63,3 @@
                 :layout  viz/svg-scatter-plot}]}))
 
 (export-viz (spec) "bezier.svg")
-
-(-> spec
-    (assoc :y-axis (viz/log-axis
-                    {:domain      [0.1 101]
-                     :range       [550 20]
-                     :pos         50
-                     :label-dist  15
-                     :label-style {:text-anchor "end"}}))
-    (export-viz "scatter-log.svg"))

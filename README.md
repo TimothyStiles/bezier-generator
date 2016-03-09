@@ -1,11 +1,8 @@
 # golo
 
-A Clojure library designed to generate logos using bezier curves
+A Clojure command line utility to generate logos.
 
 ![Logo svg](https://github.com/TimothyStiles/golo/blob/master/resources/gologo.png)
-## Usage
-
-FIXME
 
 ## License
 

@@ -54,7 +54,7 @@
       :y-axis (viz/linear-axis
                 {:domain      y-domain 
                  :range       [550 20]
-                 pos         -1})
+                 :pos         -1})
       :grid   {:attribs {:stroke "#caa"}
                 :minor-x false
                 :minor-y false}
@@ -62,4 +62,9 @@
                 :attribs {:fill "#0af" :stroke "none"}
                 :layout  viz/svg-scatter-plot}]}))
 
-(export-viz (spec) "bezier.svg")
+(defn -main
+  ([] (-main 1 ""))
+  ([amount] (-main amount ""))
+  ([amount path] 
+   (map #(export-viz (spec) (str path "logo" % ".svg")) (range amount))))
+

@@ -1,6 +1,6 @@
 (defproject golo "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+  :description "a logo generator"
+  :url "https://github.com/TimothyStiles/golo"
   :license {:name "Apache Software License"
             :url "http://www.apache.org/licenses/LICENSE-2.0"}
   :dependencies [[org.clojure/clojure "1.7.0"]

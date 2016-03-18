@@ -15,25 +15,31 @@
        (spit path)))
 
 (defn random-scalar ;scalar turned down for testing.
+  "takes no arguments return random scalar."
   []
   (let [bool (rand-nth [true false])]
         (if bool 
-          (rand-nth (range 1 2))
-          (rand-nth (map #(/ % 2) (range 1 2))))))
+          (rand-nth (range 1 100))
+          (rand-nth (map #(/ % 100) (range 1 100))))))
 
 (defmacro rand-op
+  "returns un-evaluated symbol."
   []
   '(rand-nth ['+ '*]))
 
 (defmacro rand-wave
+  "returns unevaluated wave function."
   []
   '(list '* (random-scalar) (list (rand-nth ['Math/sin 'Math/cos]) (list '* (random-scalar) 'x))))
 
 (defmacro function-generator
+  "returns unevaluated wave series."
   []
   '(list 'fn '[x] (cons (rand-op) (repeatedly (rand-nth (range 1 6)) #(rand-wave)))))
 
 (defn spec ;still need to find way to append function to graph as comment.
+  "defines a graph spec by calling the function generator twice and graphing
+  the resulting functions on an x-y plane."
   []
   (let [x-function (function-generator)
         y-function (function-generator)
@@ -63,6 +69,7 @@
                 :layout  viz/svg-scatter-plot}]}))
 
 (defn -main
+  "takes number of logos to generate and path."
   ([] (-main 1 ""))
   ([amount] (-main amount ""))
   ([amount path] 

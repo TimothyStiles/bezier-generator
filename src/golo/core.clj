@@ -70,8 +70,6 @@
 
 (defn -main
   "takes number of logos to generate and path."
-  ([] (-main 1 ""))
-  ([amount] (-main amount ""))
-  ([amount path] 
-   (map #(export-viz (spec) (str path "logo" % ".svg")) (range amount))))
-
+  ([] (-main 1))
+  ([amount] 
+   (map #(export-viz (spec) (str "logo" % ".svg")) (range amount))))
